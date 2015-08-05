@@ -61,11 +61,18 @@ if (app.get('env') === 'development') {
     });
 }
 
-// setting up server
-var server = app.listen(process.env.PORT || 3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Listening at http://%s:%s', host, port);
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
 });
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
+
 
 module.exports = app;

@@ -19,11 +19,15 @@ module.exports = function(passport){
 		res.render('index', { message: req.flash('message') });
 	});
 
+	router.get('/chat', function(req,res) {
+		res.render('chat');
+	})
+
 	/* Handle Login POST */
 	router.post('/login', passport.authenticate('login', {
 		successRedirect: '/home',
 		failureRedirect: '/',
-		failureFlash : true  
+		failureFlash : true
 	}));
 
 	/* GET Registration Page */
@@ -35,7 +39,7 @@ module.exports = function(passport){
 	router.post('/signup', passport.authenticate('signup', {
 		successRedirect: '/home',
 		failureRedirect: '/signup',
-		failureFlash : true  
+		failureFlash : true
 	}));
 
 	/* GET Home Page */
