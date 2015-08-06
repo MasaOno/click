@@ -14,7 +14,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(favicon('./public/images/favicon.ico'));
 app.use(logger('dev'));
@@ -61,11 +61,22 @@ if (app.get('env') === 'development') {
     });
 }
 
-// setting up server
-var server = app.listen(process.env.PORT || 3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Listening at http://%s:%s', host, port);
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+    //Check after deployed!
+    var socketId = socket.id;
+    var clientIp = socket.request.connection.remoteAddress;
+    console.log(clientIp);
+  });
 });
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
+
 
 module.exports = app;

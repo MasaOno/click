@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var maxmind = require('maxmind');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler
@@ -18,6 +19,10 @@ module.exports = function(passport){
 	router.get('/', function(req, res) {
 	// Display the Login page with any flash message, if any
 		res.render('index', { message: req.flash('message') });
+	});
+
+	router.get('/chat', isAuthenticated, function(req, res) {
+		res.render('chat');
 	});
 
 	/* Handle Login POST */

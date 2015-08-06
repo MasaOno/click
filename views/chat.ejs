@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/chatroom.css">
+  </head>
+  <body>
+    <div>
+      <h1>All Markup Posted Below..</h1>
+      <ul id="messages"></ul>
+    </div>
+    <form action="">
+      <input id="m" autocomplete="off">
+      <button>Send</button>
+    </form>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io();
+      $('form').submit(function(){
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+      });
+      socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+      });
+    </script>
+  </body>
+</html>
