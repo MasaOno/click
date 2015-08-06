@@ -1,27 +1,29 @@
 var express = require('express');
 var router = express.Router();
+var maxmind = require('maxmind');
 
 var isAuthenticated = function (req, res, next) {
-	// if user is authenticated in the session, call the next() to call the next request handler 
+	// if user is authenticated in the session, call the next() to call the next request handler
 	// Passport adds this method to request object. A middleware is allowed to add properties to
 	// request and response objects
-	if (req.isAuthenticated())
+	if (req.isAuthenticated()) {
 		return next();
+  }
 	// if the user is not authenticated then redirect him to the login page
 	res.redirect('/');
-}
+};
 
 module.exports = function(passport){
 
 	/* GET login page. */
 	router.get('/', function(req, res) {
-    	// Display the Login page with any flash message, if any
+	// Display the Login page with any flash message, if any
 		res.render('index', { message: req.flash('message') });
 	});
 
-	router.get('/chat', function(req,res) {
+	router.get('/chat', isAuthenticated, function(req, res) {
 		res.render('chat');
-	})
+	});
 
 	/* Handle Login POST */
 	router.post('/login', passport.authenticate('login', {
@@ -54,7 +56,7 @@ module.exports = function(passport){
 	});
 
 	return router;
-}
+};
 
 
 

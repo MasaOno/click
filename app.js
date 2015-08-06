@@ -14,7 +14,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(favicon('./public/images/favicon.ico'));
 app.use(logger('dev'));
@@ -67,6 +67,10 @@ var io = require('socket.io')(http);
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
+    //Check after deployed!
+    var socketId = socket.id;
+    var clientIp = socket.request.connection.remoteAddress;
+    console.log(clientIp);
   });
 });
 
