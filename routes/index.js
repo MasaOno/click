@@ -34,7 +34,9 @@ module.exports = function(passport){
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
-		res.render('register',{message: req.flash('message')});
+    var ipaddress = req.ip;
+    var location = maxmind.getLocation(ipaddress);
+		res.render('register', {message: req.flash('message'), ip: ipaddress});
 	});
 
 	/* Handle Registration POST */
@@ -46,6 +48,7 @@ module.exports = function(passport){
 
 	/* GET Home Page */
 	router.get('/home', isAuthenticated, function(req, res){
+    console.log('sndfwnfi: ' + req.user.username);
 		res.render('home', { user: req.user });
 	});
 
