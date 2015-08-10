@@ -34,9 +34,14 @@ module.exports = function(passport){
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
+<<<<<<< HEAD
     var ipaddress = req.ip;
     var location = maxmind.getLocation(ipaddress);
 		res.render('register', {message: req.flash('message'), ip: ipaddress});
+=======
+		var ipaddress = req.ip;
+		res.render('register',{message: req.flash('message'), ip:ipaddress});
+>>>>>>> aa4e29f7cbc09094cca79a0a41e4d77a571a2640
 	});
 
 	/* Handle Registration POST */
