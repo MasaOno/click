@@ -34,7 +34,8 @@ module.exports = function(passport){
 
 	/* GET Registration Page */
 	router.get('/signup', function(req, res){
-		res.render('register',{message: req.flash('message')});
+		var ipaddress = req.ip;
+		res.render('register',{message: req.flash('message'), ip:ipaddress});
 	});
 
 	/* Handle Registration POST */
