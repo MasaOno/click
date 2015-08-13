@@ -10,15 +10,18 @@ var isAuthenticated = function (req, res, next) {
 		return next();
   }
 	// if the user is not authenticated then redirect him to the login page
-	res.redirect('/');
+	res.redirect('/login');
 };
 
 module.exports = function(passport){
 
+	router.get('/', function(req,res) {
+		res.render('home');
+	})
 	/* GET login page. */
-	router.get('/', function(req, res) {
+	router.get('/login', function(req, res) {
 	// Display the Login page with any flash message, if any
-		res.render('index', { message: req.flash('message') });
+		res.render('login', { message: req.flash('message') });
 	});
 
 	router.get('/chat', isAuthenticated, function(req, res) {
@@ -27,8 +30,8 @@ module.exports = function(passport){
 
 	/* Handle Login POST */
 	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/home',
-		failureRedirect: '/',
+		successRedirect: '/info',
+		failureRedirect: '/login',
 		failureFlash : true
 	}));
 
@@ -41,15 +44,14 @@ module.exports = function(passport){
 
 	/* Handle Registration POST */
 	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/home',
+		successRedirect: '/info',
 		failureRedirect: '/signup',
 		failureFlash : true
 	}));
 
 	/* GET Home Page */
-	router.get('/home', isAuthenticated, function(req, res){
-    console.log('sndfwnfi: ' + req.user.username);
-		res.render('home', { user: req.user });
+	router.get('/info', isAuthenticated, function(req, res){
+		res.render('info', { user: req.user });
 	});
 
 	/* Handle Logout */
