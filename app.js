@@ -9,7 +9,7 @@ var dbConfig = require('./db');
 var mongoose = require('mongoose');
 // Connect to DB
 mongoose.connect(dbConfig.url);
-
+// pointless comment
 var app = express();
 
 // view engine setup
