@@ -1,5 +1,9 @@
 # click
 
+###### This is a friend pairing social media app. The general concept is that many people tend to socialize with no more than 5 of their closest friends. In order to break free of that habit, this app will randomly generate "pairings" of your facebook friends for you to socialize and hangout with.
+
+###### TODO
+
 1) Facebook authentication
 
 2) Adding registered users to database
